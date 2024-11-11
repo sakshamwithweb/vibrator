@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vibration Example</title>
+  <title>Vibration Pattern Example</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,23 +20,46 @@
       color: white;
       border-radius: 5px;
     }
+    input {
+      font-size: 18px;
+      padding: 5px;
+      width: 50px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h1>Vibration Example</h1>
-  <p>Click a button to vibrate the phone according to the number on the button.</p>
+  <h1>Vibration Pattern Example</h1>
+  <p>Enter the number of repetitions and click the button to trigger the vibration pattern.</p>
 
-  <!-- Buttons with numbers -->
-  <button onclick="vibratePhone(100)">Vibrate for 100ms</button>
-  <button onclick="vibratePhone(300)">Vibrate for 300ms</button>
-  <button onclick="vibratePhone(500)">Vibrate for 500ms</button>
-  <button onclick="vibratePhone(1000)">Vibrate for 1000ms</button>
+  <!-- Input for the number of times -->
+  <input type="number" id="repeatCount" value="3" min="1" max="10" />
+  <button onclick="startVibration()">Vibrate Pattern</button>
 
   <script>
-    // Function to trigger vibration based on the passed duration
-    function vibratePhone(duration) {
+    // Function to trigger vibration pattern based on input
+    function startVibration() {
+      const repeatCount = document.getElementById("repeatCount").value;
+      let count = 0;
+
+      // Check if vibration is supported
       if ("vibrate" in navigator) {
-        navigator.vibrate(duration); // Trigger vibration for the given duration
+        // Set up the interval to repeat the vibration and rest pattern
+        const interval = setInterval(function () {
+          if (count < repeatCount) {
+            navigator.vibrate(1000); // Vibrate for 1 second
+            count++;
+
+            // Stop the vibration for 1 second before the next vibration
+            if (count < repeatCount) {
+              setTimeout(function () {
+                // Do nothing, just wait for the next vibration
+              }, 1000); // Wait for 1 second
+            }
+          } else {
+            clearInterval(interval); // Stop the interval after the specified number of repetitions
+          }
+        }, 2000); // Complete one cycle every 2 seconds (1 second vibration + 1 second pause)
       } else {
         alert("Vibration API is not supported on this device.");
       }
