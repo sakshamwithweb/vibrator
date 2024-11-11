@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibration Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vibration Example</h1>
+  <p>Click a button to vibrate the phone according to the number on the button.</p>
+
+  <!-- Buttons with numbers -->
+  <button onclick="vibratePhone(100)">Vibrate for 100ms</button>
+  <button onclick="vibratePhone(300)">Vibrate for 300ms</button>
+  <button onclick="vibratePhone(500)">Vibrate for 500ms</button>
+  <button onclick="vibratePhone(1000)">Vibrate for 1000ms</button>
+
+  <script>
+    // Function to trigger vibration based on the passed duration
+    function vibratePhone(duration) {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(duration); // Trigger vibration for the given duration
+      } else {
+        alert("Vibration API is not supported on this device.");
+      }
+    }
+  </script>
+</body>
+</html>
